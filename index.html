@@ -3,34 +3,13 @@
 <head>
 	<title>Human Slide test</title>
 	<style>
-		#HumanSlide{
-			height : 80vh;
-			width : 60vh;
-			background-color: black;
+		.HumanSlide{
+			max-width:50vh;
 		}
-
-		#HumanSlideCanvas{
-			/* height : 80vh;
-			width : 60vh;
-			background-color: blue; */
-		}
-		.arrow_box {
-			position: relative;
-			background: #ebebeb;
-		}
-		.arrow_box:after {
-			left: 100%;
-			top: 50%;
-			border: solid transparent;
-			content: " ";
-			height: 0;
-			width: 0;
-			position: absolute;
-			pointer-events: none;
-			border-color: rgba(235, 235, 235, 0);
-			border-left-color: #ebebeb;
-			border-width: 10px;
-			margin-top: -10px;
+		.puzzle {
+			background-size: 100% auto;
+			width  : 100%;
+			height : 33.33%;
 		}
 	</style>
 	<script type="text/javascript" src="HumanSlide.js"></script>
@@ -38,18 +17,15 @@
 </head>
 
 <body>
-	<canvas id="HumanSlideCanvas">
-
-	</canvas>
-	<div id="HumanSlide">
+	<div id="HumanSlide" class="HumanSlide">
 
 	</div>
 
 </body>
 
 <script>
-	var slide = new HumanSlide(['photo1.jpg']);
-	
+	var slide = new HumanSlide(['photo1.jpg', 'photo2.jpg']);
+
 </script>
 
 </html>

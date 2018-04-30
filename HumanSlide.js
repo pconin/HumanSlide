@@ -12,20 +12,28 @@ class HumanSlide {
 	constructor(images, options){
 		if(!options) options = {};
 		if(!images || typeof images !== 'object') return console.log('Error : you have to pass an array as images');
+		var self = this;
 
 		this.images		= images;
 		this.options	= options;
 		console.log(images);
 		console.log(options);
-		this.createStyle();
 		this.assertParams();
-		this.insertSplitImg();
+		this.createStyle();
+		this.start();
+		window.onresize = function(){console.log('resize'); self.resize();};
+	}
+	// Todo later, get ratio only the first time to remove the callback from insertSplitImg
+	getRatio(){
+
 	}
 
+	// Create additional CSS
 	createStyle(){
 
 	}
 
+	// Assert parameters
 	assertParams(){
 		this.div			= document.getElementById(this.options.div		|| def.div);
 		this.activeImage	= this.options.activeImage	|| def.activeImage;
@@ -37,11 +45,29 @@ class HumanSlide {
 		this.length = this.images.length;
 	}
 
+	// Rebuild on resize
+	resize(){
+		for(var i = 0; i < this.images.length; i++){
+			for(var j = 0; j < this.images[i].parts.length; j++){
+				this.div.removeChild(this.images[i].parts[j]);
+			}
+		}
+		this.start();
+	}
+
+	//
+	start(){
+		this.insertSplitImg();
+	}
+
+
+
 	insertSplitImg(){
 		var self = this;
 		// Create image and get ratio
 		var image = document.createElement('img');
 		image.id  = 'image';
+		console.log(this.images);
 		image.src = this.images[0].src;
 		this.div.appendChild(image);
 
@@ -60,16 +86,18 @@ class HumanSlide {
 				for(var j = 0; j < self.splitsNb; j++){
 					var yPercent = (100 / (self.splitsNb - 1)) * j;
 
-					console.log(self.splitsNb , j);
 					var part		= document.createElement('div');
 					part.className += 'puzzle';
 					part.id			= 'piece' + i + 'part' + j;
 					part.setAttribute('style', 'background-image:url(\''+ image.src +'\');background-position:0% ' + yPercent + '%;');
-					console.log(part);
 					self.div.appendChild(part);
 
 					image.parts[j]	= part;
 				}
+
+
+				// Remove image from parents
+				if(document.getElementById('image')) self.div.removeChild(document.getElementById('image'));
 
 
 
